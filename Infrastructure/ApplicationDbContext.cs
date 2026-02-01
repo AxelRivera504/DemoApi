@@ -15,6 +15,8 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
+    //Add-Migration AgregandoCamposExtrasCliente
+
     public virtual DbSet<Cliente> Clientes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,7 +27,14 @@ public partial class ApplicationDbContext : DbContext
 
             entity.Property(e => e.Correo).HasMaxLength(100);
             entity.Property(e => e.Nombre).HasMaxLength(100);
+            entity.Property(e => e.Telefono).HasMaxLength(20);
+            entity.Property(e => e.Correo).HasMaxLength(150);
+            entity.Property(e => e.ClienteActivo).HasDefaultValue(true);
         });
+
+        modelBuilder.Entity<Cliente>()
+            .HasIndex(c => c.Correo)
+            .IsUnique();
 
         OnModelCreatingPartial(modelBuilder);
     }
